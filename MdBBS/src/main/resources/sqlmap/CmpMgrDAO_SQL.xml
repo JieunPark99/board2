@@ -1,0 +1,88 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN' 'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+<mapper namespace='CmpMgrDAO'>
+
+<!-- /////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+
+	<!-- 회사 목록 조회 -->
+	<select id='CmpMgrDAO.selectCmpList' resultType='java.util.HashMap'>
+		SELECT
+			 COMP_SEQ
+			, COMP_NM
+			, COMP_NO
+			, DECODE(USE_YN, 'Y', '사용', '미사용') AS USE_YN
+		FROM TCOM_COMP
+		WHERE REPLACE(COMP_NM, ' ', '') LIKE '%' || REPLACE(#{COMP_NM}, ' ', '') || '%' 
+		ORDER BY COMP_SEQ
+	</select>
+<!-- /////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+
+	<!-- 사원수 세기 -->
+	<select id='CmpMgrDAO.CountEmp' resultType='Int'>
+		SELECT COUNT(*)
+		FROM TCOM_COMP_EMP
+		WHERE COMP_SEQ = #{COMP_SEQ}
+	</select>
+
+<!-- /////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+	
+	<!-- 회사 정보 상세조회 -->
+	<select id='CmpMgrDAO.selectDetailCmp' resultType='java.util.HashMap'>
+		SELECT
+			COMP_SEQ
+			, COMP_NM
+			, COMP_NO
+			, USE_YN
+		FROM TCOM_COMP
+		WHERE COMP_SEQ = #{COMP_SEQ}
+	</select>
+	
+<!-- /////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+
+	<!-- 회사 정보 추가 -->
+	<insert id="CmpMgrDAO.insertCmp">
+		INSERT INTO TCOM_COMP
+		(
+			COMP_SEQ
+			, COMP_NM
+			, COMP_NO
+			, USE_YN
+			, REG_DT
+			, MOD_DT
+		)
+		VALUES
+		(
+			(SELECT NVL(MAX(COMP_SEQ), 0) + 1 FROM TCOM_COMP)
+			, #{COMP_NM}
+			, #{COMP_NO}
+			, #{USE_YN}
+			, SYSDATE
+			, NULL
+		)
+	</insert>
+
+<!-- /////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+
+	<!-- 회사 정보 수정 -->
+	<update id="CmpMgrDAO.updateCmp">
+	UPDATE TCOM_COMP
+	SET 
+		COMP_NM=#{COMP_NM}
+		,COMP_NO=#{COMP_NO}
+		,USE_YN=#{USE_YN}
+		,REG_DT=SYSDATE
+		,MOD_DT=SYSDATE
+	WHERE COMP_SEQ = #{COMP_SEQ}
+	</update>
+
+<!-- /////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+	
+	<!-- 회사 정보 삭제 -->
+	<delete id="CmpMgrDAO.deleteCmp">
+		DELETE FROM TCOM_COMP
+		WHERE COMP_SEQ = #{COMP_SEQ}
+	</delete>
+	
+<!-- /////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+	
+</mapper>

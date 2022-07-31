@@ -1,0 +1,49 @@
+  table {
+    width: 100%;
+    border-top: 1px solid #444444;
+    border-collapse: collapse;
+  }
+  th, td {
+    border-bottom: 1px solid #444444;
+    padding: 2px;
+  }
+  
+ .blueBtn{
+  	background-color:#78f1ff;
+ }
+ 
+ .redBtn{
+ 	background-color:#ff69b1;
+ 	color:white;
+ 	font-weight:bold;
+ }
+ 
+ #grid1{
+ 	width:49.8%;
+ 	float:left;
+ 	background-color:#f2f0f0;
+ }
+ 
+ #grid2{
+ 	width:49.5%;
+ 	float:right;
+ 	background-color:#f2f0f0;
+ }
+ 
+ #grid3{
+ 	wdith:95%;
+ 	background-color:#f2f0f0;
+ }
+ 
+ #CheckOverlap{
+ 	background-color: white;
+ }
+ 
+ .button_function{
+ 	cursor:pointer;
+ }
+ 
+ .selectedOn{
+ 	background-color: #FF2E2E;
+ 	color: #ffffff;
+ }
